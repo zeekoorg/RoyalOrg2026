@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         // =========================================
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_content_container), (v, insets) -> {
             androidx.core.graphics.Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            // إضافة مسافات بادئة (Padding) بناءً على ارتفاع شريط الإشعارات وشريط التنقل السفلي
             v.setPadding(0, systemBars.top, 0, systemBars.bottom);
             return WindowInsetsCompat.CONSUMED;
         });
@@ -68,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         ImageButton btnMenu = findViewById(R.id.btn_menu);
         ImageButton btnLanguage = findViewById(R.id.btn_language);
         FrameLayout bannerContainer = findViewById(R.id.banner_container);
+
+        // 🚀 تحميل البانر الإعلاني في الحاوية السفلية
+        UnityAdsManager.getInstance().loadBanner(this, bannerContainer);
 
         // فتح القائمة الجانبية
         btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
@@ -94,35 +96,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // =========================================
-    // 2. منطق الإعلانات والتحميل (مهيأ للكلاس المنفصل)
+    // 2. منطق الإعلانات والتحميل
     // =========================================
     private void showAdRequirementDialog(String downloadUrl) {
-        new MaterialAlertDialogBuilder(this, R.style.Theme_RoyalOrg2026_NoActionBar) // يمكن تخصيص ثيم الدايلوج لاحقاً
+        new MaterialAlertDialogBuilder(this, R.style.Theme_RoyalOrg2026_NoActionBar)
                 .setTitle(R.string.ad_dialog_title)
                 .setMessage(R.string.ad_dialog_message)
                 .setPositiveButton(R.string.yes_watch, (dialog, which) -> {
-                    // هنا سيتم استدعاء كلاس الإعلانات لاحقاً
-                    // مثال مستقبلي: AdManager.showRewardAd(this, new AdListener() { ... });
                     
-                    boolean isAdReady = false; // قيمة تجريبية
+                    // 🚀 توجيه الطلب لمدير الإعلانات الذي سيتولى كل شيء:
+                    // (عرض الإعلان فوراً، أو إظهار دايلوج التحميل لمدة 15 ثانية، ثم فتح الرابط)
+                    UnityAdsManager.getInstance().handleAdRequest(MainActivity.this, downloadUrl, new UnityAdsManager.AdActionCallback() {
+                        @Override
+                        public void onProceed(String url) {
+                            // يتم استدعاء هذا فقط بعد إغلاق الإعلان بنجاح، أو انقضاء الـ 15 ثانية
+                            openWebLink(url);
+                        }
+                    });
 
-                    if (isAdReady) {
-                        // يتم عرض الإعلان وفقط عند (إغلاقه) يفتح الرابط
-                        Toast.makeText(this, "جاري عرض الإعلان...", Toast.LENGTH_SHORT).show();
-                        // openWebLink(downloadUrl); // تستدعى بعد OnAdClosed
-                    } else {
-                        // إظهار دايلوج "جاري تحميل إعلان"
-                        showLoadingAdDialog();
-                    }
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .show();
-    }
-
-    private void showLoadingAdDialog() {
-        // دايلوج بسيط يفيد بتحميل الإعلان
-        Toast.makeText(this, getString(R.string.loading_ad), Toast.LENGTH_LONG).show();
-        // سيتم برمجتها بشكل متقدم في كلاس الإعلانات
     }
 
     // =========================================
@@ -131,13 +125,12 @@ public class MainActivity extends AppCompatActivity {
     private void toggleLanguage() {
         currentLang = currentLang.equals("ar") ? "en" : "ar";
         
-        // حفظ اللغة الجديدة
         SharedPreferences.Editor editor = getSharedPreferences("RoyalAppPrefs", MODE_PRIVATE).edit();
         editor.putString("app_lang", currentLang);
         editor.apply();
 
         setAppLocale(currentLang);
-        updateUIStrings(); // تحديث النصوص فوراً
+        updateUIStrings(); 
     }
 
     private void setAppLocale(String langCode) {
@@ -146,24 +139,20 @@ public class MainActivity extends AppCompatActivity {
         Resources resources = getResources();
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
-        // تحديث إعدادات النظام الداخلية للتطبيق
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 
     private void updateUIStrings() {
-        // تحديث نصوص الشاشة فوراً من الـ Resources الجديدة
         tvHeaderTitle.setText(R.string.app_name);
         btnDownload2027.setText(R.string.download_2027);
         btnDownloadVip.setText(R.string.download_vip);
         btnPreview.setText(R.string.preview_org);
         tvCopyright.setText(R.string.copyright);
 
-        // تحديث نصوص القائمة الجانبية
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.nav_privacy).setTitle(R.string.privacy_policy);
         menu.findItem(R.id.nav_telegram).setTitle(R.string.contact_telegram);
         
-        // عكس اتجاه الشاشة (RTL إلى LTR والعكس) ليناسب اللغة فوراً
         drawerLayout.setLayoutDirection(currentLang.equals("ar") ? ViewCompat.LAYOUT_DIRECTION_RTL : ViewCompat.LAYOUT_DIRECTION_LTR);
     }
 
@@ -175,4 +164,3 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
-
