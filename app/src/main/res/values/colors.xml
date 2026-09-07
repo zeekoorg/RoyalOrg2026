@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- الألوان الملكية الخاصة بتطبيقك -->
+    <color name="royal_primary">#1A237E</color> <!-- كحلي داكن -->
+    <color name="royal_primary_dark">#000051</color> <!-- كحلي غامق لشريط الإشعارات -->
+    <color name="royal_accent">#FFD700</color> <!-- ذهبي ملكي -->
+</resources>
