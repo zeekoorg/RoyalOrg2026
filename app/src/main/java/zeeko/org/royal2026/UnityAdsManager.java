@@ -186,6 +186,8 @@ public class UnityAdsManager {
             public void onBannerFailedToLoad(BannerView bannerView, BannerErrorInfo errorInfo) {}
             @Override
             public void onBannerLeftApplication(BannerView bannerView) {}
+            @Override
+            public void onBannerShown(BannerView bannerView) {}
         });
         bannerView.load();
     }
