@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ========================================== -->
+    <!-- 1. الصلاحيات (أحدث المعايير) -->
+    <!-- ========================================== -->
+    
+    <!-- صلاحيات الإنترنت للوصول لإعلانات Unity وتحليلات Firebase -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <!-- صلاحية معرف الإعلانات (مهمة جداً في أندرويد 12 وما فوق لظهور الإعلانات والربح) -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+
+    <application
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:hardwareAccelerated="true"
+        android:theme="@style/Theme.RoyalOrg2026"
+        tools:targetApi="35">
+
+        <!-- ========================================== -->
+        <!-- 2. الشاشات (Activities) -->
+        <!-- ========================================== -->
+
+        <!-- الشاشة الأولى: شاشة البداية (Splash Screen) -->
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.RoyalOrg2026.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- الشاشة الثانية: شاشة اختيار اللغة (Language Selection) -->
+        <activity
+            android:name=".LanguageActivity"
+            android:exported="false"
+            android:theme="@style/Theme.RoyalOrg2026.NoActionBar" />
+
+        <!-- الشاشة الثالثة: الشاشة الرئيسية (Main Screen) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.RoyalOrg2026.NoActionBar" />
+
+        <!-- الشاشة الرابعة: شاشة معاينة الأورج (ORG Preview) -->
+        <!-- تم وضعها بالوضع الأفقي (Landscape) لأن الأورج يحتاج شاشة عريضة -->
+        <activity
+            android:name=".PreviewActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/Theme.RoyalOrg2026.NoActionBar.Fullscreen" />
+
+        <!-- ========================================== -->
+        <!-- 3. إعدادات الإعلانات (Unity Ads) -->
+        <!-- ========================================== -->
+        <!-- Unity Ads تقوم بدمج الـ Activities الخاصة بها تلقائياً، 
+             ولكن من الجيد وضع هذه العلامة لتسريع تهيئة الإعلانات -->
+        <meta-data
+            android:name="unityplayer.SkipPermissionsDialog"
+            android:value="true" />
+
+    </application>
+
+</manifest>
