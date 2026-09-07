@@ -2,13 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- ========================================== -->
-    <!-- 1. الصلاحيات (بدون صلاحيات الملفات كما طلبت) -->
-    <!-- ========================================== -->
-    <!-- ضرورية للإعلانات وتحليلات فايربيس -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- ضرورية لإعلانات Unity في أندرويد 13 وما فوق (API 33+) -->
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
@@ -22,14 +17,12 @@
         android:theme="@style/Theme.RoyalOrg2026"
         android:hardwareAccelerated="true" 
         tools:targetApi="35">
-        <!-- android:hardwareAccelerated="true" تضمن تسريع الرسوميات بأقصى كفاءة -->
 
-        <!-- ========================================== -->
-        <!-- 2. شاشة البداية (Splash Screen) -->
-        <!-- ========================================== -->
+        <!-- شاشة البداية -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.RoyalOrg2026.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,47 +30,36 @@
             </intent-filter>
         </activity>
 
-        <!-- ========================================== -->
-        <!-- 3. شاشة اختيار اللغة -->
-        <!-- ========================================== -->
+        <!-- شاشة اختيار اللغة -->
         <activity
             android:name=".LanguageActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.RoyalOrg2026.NoActionBar" />
 
-        <!-- ========================================== -->
-        <!-- 4. الشاشة الرئيسية ونظام الروابط (Deep Links) -->
-        <!-- ========================================== -->
+        <!-- الشاشة الرئيسية -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.RoyalOrg2026.NoActionBar">
             
-            <!-- نظام استقبال الروابط الخارجية لفتح التطبيق -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                
-                <!-- استقبال روابط الويب (يمكنك تغيير zeeko.org إلى رابط موقعك أو قناتك) -->
                 <data android:scheme="http" android:host="zeeko.org" />
                 <data android:scheme="https" android:host="zeeko.org" />
-                
-                <!-- استقبال روابط مخصصة مثل royal2026://open -->
                 <data android:scheme="royal2026" android:host="open" />
             </intent-filter>
         </activity>
 
-        <!-- ========================================== -->
-        <!-- 5. شاشة معاينة الأورج -->
-        <!-- ========================================== -->
-        <!-- تم ضبطها على الوضع العرضي (Landscape) لتناسب واجهة الأورج -->
+        <!-- شاشة معاينة الأورج (تم تحويلها للوضع العمودي) -->
         <activity
             android:name=".OrgPreviewActivity"
             android:exported="false"
-            android:screenOrientation="sensorLandscape"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.RoyalOrg2026.NoActionBar" />
 
     </application>
