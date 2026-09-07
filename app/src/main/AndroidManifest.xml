@@ -30,6 +30,15 @@
             </intent-filter>
         </activity>
 
+        <!-- ========================================== -->
+        <!-- شاشة التحقق من الإنترنت (جديدة) -->
+        <!-- ========================================== -->
+        <activity
+            android:name=".NetworkCheckActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.RoyalOrg2026.NoActionBar" />
+
         <!-- شاشة اختيار اللغة -->
         <activity
             android:name=".LanguageActivity"
@@ -55,7 +64,7 @@
             </intent-filter>
         </activity>
 
-        <!-- شاشة معاينة الأورج (تم تحويلها للوضع العمودي) -->
+        <!-- شاشة معاينة الأورج -->
         <activity
             android:name=".OrgPreviewActivity"
             android:exported="false"
