@@ -23,7 +23,7 @@ public class UnityAdsManager {
     private static UnityAdsManager instance;
 
     // استبدل هذه المعرفات بمعرفات حسابك في يونيتي
-    private final String GAME_ID = "1234567"; 
+    private final String GAME_ID = "6186592"; 
     private final String REWARDED_PLACEMENT = "Rewarded_Android";
     private final String BANNER_PLACEMENT = "Banner_Android";
     private final boolean TEST_MODE = true; // اجعلها false عند النشر النهائي
