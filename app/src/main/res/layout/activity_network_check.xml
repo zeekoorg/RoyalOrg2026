@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/royal26">
+
+    <!-- طبقة التظليل الملكي -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#A6000022" /> <!-- كحلي داكن شفاف -->
+
+    <!-- أيقونة / أنيميشن التحميل (يمكنك استخدام Lottie لاحقاً، حالياً سنستخدم شريط تحميل أنيق) -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:indeterminateTint="@color/royal_accent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginBottom="24dp" />
+
+    <!-- أيقونة لا يوجد اتصال (مخفية افتراضياً) -->
+    <ImageView
+        android:id="@+id/img_no_internet"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@android:drawable/ic_dialog_alert"
+        app:tint="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tv_status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- رسالة الحالة -->
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="جاري التحقق من الاتصال الإمبراطوري..."
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/btn_retry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
+        android:layout_marginBottom="40dp"/>
+
+    <!-- زر إعادة المحاولة (مخفي افتراضياً) -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_retry"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="إعادة المحاولة"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/royal_accent"
+        app:cornerRadius="15dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_status" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
