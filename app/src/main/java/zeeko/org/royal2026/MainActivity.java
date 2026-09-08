@@ -1,30 +1,28 @@
 package zeeko.org.royal2026;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.Locale;
 
@@ -34,55 +32,51 @@ import eightbitlab.com.blurview.RenderScriptBlur;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
     private String currentLang;
     
-    // تعريف عناصر النصوص لتحديثها لاحقاً
     private TextView tvHeaderTitle, tvCopyright;
     private TextView tvBtnDownload2027, tvBtnDownloadVip, tvBtnPreview;
+    private TextView tvNavPrivacy, tvNavTelegram;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // جلب اللغة المحفوظة أو تعيين الافتراضية
         SharedPreferences prefs = getSharedPreferences("RoyalAppPrefs", MODE_PRIVATE);
         currentLang = prefs.getString("app_lang", "ar");
         setAppLocale(currentLang);
         
         setContentView(R.layout.activity_main);
 
-        // =========================================
-        // 1. حماية الشاشة من التداخل مع شريط النظام
-        // =========================================
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_content_container), (v, insets) -> {
             androidx.core.graphics.Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(0, systemBars.top, 0, systemBars.bottom);
             return WindowInsetsCompat.CONSUMED;
         });
 
-        // ربط العناصر الأساسية
         drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
         tvHeaderTitle = findViewById(R.id.tv_header_title);
         tvCopyright = findViewById(R.id.tv_copyright);
         
-        // ربط نصوص الأزرار الزجاجية
         tvBtnDownload2027 = findViewById(R.id.tv_btn_download_2027);
         tvBtnDownloadVip = findViewById(R.id.tv_btn_download_vip);
         tvBtnPreview = findViewById(R.id.tv_btn_preview);
+        
+        tvNavPrivacy = findViewById(R.id.tv_nav_privacy);
+        tvNavTelegram = findViewById(R.id.tv_nav_telegram);
 
-        // ربط حاويات النقر للأزرار
         LinearLayout btnMenu = findViewById(R.id.btn_menu_click);
         LinearLayout btnLanguage = findViewById(R.id.btn_language_click);
         LinearLayout btnDownload2027 = findViewById(R.id.btn_download_2027_click);
         LinearLayout btnDownloadVip = findViewById(R.id.btn_download_vip_click);
         LinearLayout btnPreview = findViewById(R.id.btn_preview_click);
+        
+        LinearLayout navPrivacyClick = findViewById(R.id.nav_privacy_click);
+        LinearLayout navTelegramClick = findViewById(R.id.nav_telegram_click);
+        
         FrameLayout bannerContainer = findViewById(R.id.banner_container);
 
-        // =========================================
-        // 2. تهيئة تأثير الزجاج (BlurView)
-        // =========================================
+        // تهيئة تأثير الزجاج (BlurView) لكل الأزرار والقائمة الجانبية
         View decorView = getWindow().getDecorView();
         ViewGroup rootView = (ViewGroup) decorView.findViewById(android.R.id.content);
         Drawable windowBackground = decorView.getBackground();
@@ -92,71 +86,89 @@ public class MainActivity extends AppCompatActivity {
         setupBlurView(findViewById(R.id.blurBtnDownload2027), rootView, windowBackground);
         setupBlurView(findViewById(R.id.blurBtnDownloadVip), rootView, windowBackground);
         setupBlurView(findViewById(R.id.blurBtnPreview), rootView, windowBackground);
+        setupBlurView(findViewById(R.id.blurDrawerContainer), rootView, windowBackground);
 
-        // =========================================
-        // 3. ربط الإعلانات والنقرات
-        // =========================================
-        // 🚀 تحميل البانر الإعلاني في الحاوية السفلية
+        // تحميل البانر الإعلاني
         UnityAdsManager.getInstance().loadBanner(this, bannerContainer);
 
-        // فتح القائمة الجانبية
         btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
-
-        // تبديل اللغة ديناميكياً
         btnLanguage.setOnClickListener(v -> toggleLanguage());
 
-        // أزرار التحميل والمعاينة
-        btnDownload2027.setOnClickListener(v -> showAdRequirementDialog("https://example.com/download_2027"));
-        btnDownloadVip.setOnClickListener(v -> showAdRequirementDialog("https://example.com/download_vip"));
+        btnDownload2027.setOnClickListener(v -> showGlassAdDialog("https://example.com/download_2027"));
+        btnDownloadVip.setOnClickListener(v -> showGlassAdDialog("https://example.com/download_vip"));
         btnPreview.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, OrgPreviewActivity.class)));
 
-        // إدارة نقرات القائمة الجانبية
-        navigationView.setNavigationItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.nav_privacy) {
-                openWebLink("https://www.zeekoorg.com/p/privacy-policy-almalaki.html");
-            } else if (id == R.id.nav_telegram) {
-                openWebLink("https://t.me/zeeko2025");
-            }
+        // نقرات القائمة الجانبية الزجاجية
+        navPrivacyClick.setOnClickListener(v -> {
+            openWebLink("https://www.zeekoorg.com/p/privacy-policy-almalaki.html");
             drawerLayout.closeDrawer(GravityCompat.START);
-            return true;
+        });
+        navTelegramClick.setOnClickListener(v -> {
+            openWebLink("https://t.me/zeeko2025");
+            drawerLayout.closeDrawer(GravityCompat.START);
         });
     }
 
-    // دالة مساعدة لتهيئة الزجاج (BlurView) بشكل احترافي
     private void setupBlurView(BlurView blurView, ViewGroup rootView, Drawable windowBackground) {
         if (blurView != null) {
             blurView.setupWith(rootView, new RenderScriptBlur(this))
                     .setFrameClearDrawable(windowBackground)
-                    .setBlurRadius(15f); // يمكنك تعديل درجة الضبابية (الحد الأقصى 25)
+                    .setBlurRadius(15f); 
         }
     }
 
     // =========================================
-    // 4. منطق الإعلانات والتحميل
+    // إنشاء الدايلوج الزجاجي الموحد للإعلانات
     // =========================================
-    private void showAdRequirementDialog(String downloadUrl) {
-        new MaterialAlertDialogBuilder(this, R.style.Theme_RoyalOrg2026_NoActionBar)
-                .setTitle(R.string.ad_dialog_title)
-                .setMessage(R.string.ad_dialog_message)
-                .setPositiveButton(R.string.yes_watch, (dialog, which) -> {
-                    
-                    // 🚀 توجيه الطلب لمدير الإعلانات الذي سيتولى كل شيء:
-                    UnityAdsManager.getInstance().handleAdRequest(MainActivity.this, downloadUrl, new UnityAdsManager.AdActionCallback() {
-                        @Override
-                        public void onProceed(String url) {
-                            openWebLink(url);
-                        }
-                    });
+    private void showGlassAdDialog(String downloadUrl) {
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_custom_glass);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // خلفية شفافة للدايلوج
 
-                })
-                .setNegativeButton(R.string.cancel, null)
-                .show();
+        // تهيئة الزجاج الخاص بالدايلوج
+        View decorView = getWindow().getDecorView();
+        ViewGroup rootView = (ViewGroup) decorView.findViewById(android.R.id.content);
+        setupBlurView(dialog.findViewById(R.id.blurDialogBg), rootView, new ColorDrawable(Color.TRANSPARENT));
+
+        TextView tvTitle = dialog.findViewById(R.id.tvDialogTitle);
+        TextView tvMessage = dialog.findViewById(R.id.tvDialogMessage);
+        LinearLayout dynamicContainer = dialog.findViewById(R.id.dialogDynamicContainer);
+
+        tvTitle.setText(R.string.ad_dialog_title);
+        tvMessage.setText(R.string.ad_dialog_message);
+
+        // زر إلغاء
+        TextView btnCancel = new TextView(this);
+        btnCancel.setText(R.string.cancel);
+        btnCancel.setTextColor(Color.WHITE);
+        btnCancel.setPadding(20, 20, 20, 20);
+        LinearLayout.LayoutParams cancelParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+        btnCancel.setLayoutParams(cancelParams);
+        btnCancel.setGravity(android.view.Gravity.CENTER);
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+        // زر مشاهدة (نيون ذهبي)
+        TextView btnWatch = new TextView(this);
+        btnWatch.setText(R.string.yes_watch);
+        btnWatch.setTextColor(Color.parseColor("#FFD700"));
+        btnWatch.setPadding(20, 20, 20, 20);
+        LinearLayout.LayoutParams watchParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+        btnWatch.setLayoutParams(watchParams);
+        btnWatch.setGravity(android.view.Gravity.CENTER);
+        btnWatch.setOnClickListener(v -> {
+            dialog.dismiss();
+            
+            // 🚀 توجيه الطلب لمدير الإعلانات (والذي يجب أن نعدله ليعرض نافذة زجاجية أيضاً للتحميل)
+            UnityAdsManager.getInstance().handleAdRequest(MainActivity.this, downloadUrl, url -> openWebLink(url));
+        });
+
+        dynamicContainer.addView(btnCancel);
+        dynamicContainer.addView(btnWatch);
+
+        dialog.show();
     }
 
-    // =========================================
-    // 5. تغيير اللغة ديناميكياً بدون إعادة رسم الشاشة
-    // =========================================
     private void toggleLanguage() {
         currentLang = currentLang.equals("ar") ? "en" : "ar";
         
@@ -184,16 +196,12 @@ public class MainActivity extends AppCompatActivity {
         tvBtnPreview.setText(R.string.preview_org);
         tvCopyright.setText(R.string.copyright);
 
-        Menu menu = navigationView.getMenu();
-        menu.findItem(R.id.nav_privacy).setTitle(R.string.privacy_policy);
-        menu.findItem(R.id.nav_telegram).setTitle(R.string.contact_telegram);
+        tvNavPrivacy.setText(R.string.privacy_policy);
+        tvNavTelegram.setText(R.string.contact_telegram);
         
         drawerLayout.setLayoutDirection(currentLang.equals("ar") ? ViewCompat.LAYOUT_DIRECTION_RTL : ViewCompat.LAYOUT_DIRECTION_LTR);
     }
 
-    // =========================================
-    // أدوات مساعدة
-    // =========================================
     private void openWebLink(String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
