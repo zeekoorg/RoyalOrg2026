@@ -5,8 +5,9 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/royal26"
-    android:fitsSystemWindows="true"> <!-- حماية أولية من النظام -->
+    android:background="#000000"
+    android:layoutDirection="locale"
+    android:fitsSystemWindows="true">
 
     <!-- ================= المحتوى الرئيسي ================= -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,108 +15,238 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- تظليل خلفي للملكية -->
-        <View
+        <!-- الخلفية المخصصة (صورة royal26) مع تظليل -->
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#9900081A" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/royal26" />
+                
+            <!-- طبقة تظليل لزيادة وضوح الأزرار الزجاجية -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#66000000" />
+        </FrameLayout>
 
-        <!-- الشريط العلوي (Custom Toolbar) -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/top_bar"
+        <!-- ================= الشريط العلوي الزجاجي ================= -->
+        <LinearLayout
+            android:id="@+id/topBarContainer"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="#4DFFFFFF"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="6dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="5dp"
+            android:gravity="top"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/btn_menu"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_menu_sort_by_size"
-                app:tint="@color/royal_accent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <TextView
-                android:id="@+id/tv_header_title"
-                android:layout_width="wrap_content"
+            <!-- زر القائمة الجانبية -->
+            <LinearLayout
+                android:id="@+id/btn_menu_click"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/btn_menu"
-                app:layout_constraintEnd_toStartOf="@+id/btn_language"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless">
 
-            <ImageButton
-                android:id="@+id/btn_language"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginEnd="8dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_menu_manage" 
-                app:tint="@color/royal_accent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <eightbitlab.com.blurview.BlurView
+                    android:id="@+id/blurMenuBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_glass_circle_border"
+                    android:clipToOutline="true"
+                    app:blurOverlayColor="#0DFFFFFF">
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_sort_by_size"
+                        app:tint="#FFD700" />
+                </eightbitlab.com.blurview.BlurView>
+            </LinearLayout>
 
-        <!-- الأزرار المركزية بأسلوب البطاقات الزجاجية -->
-        <LinearLayout
+            <!-- عنوان التطبيق في المنتصف -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_gravity="center_vertical">
+                <TextView
+                    android:id="@+id/tv_header_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:shadowColor="#FF000000"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2" />
+            </LinearLayout>
+
+            <!-- زر تبديل اللغة -->
+            <LinearLayout
+                android:id="@+id/btn_language_click"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless">
+
+                <eightbitlab.com.blurview.BlurView
+                    android:id="@+id/blurLangBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_glass_circle_border"
+                    android:clipToOutline="true"
+                    app:blurOverlayColor="#0DFFFFFF">
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_manage"
+                        app:tint="#FFD700" />
+                </eightbitlab.com.blurview.BlurView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ================= أزرار الشاشة المركزية (تحميل ومعاينة) ================= -->
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/top_bar"
+            android:clipToPadding="false"
+            android:paddingBottom="20dp"
+            android:fillViewport="false"
+            app:layout_constraintTop_toBottomOf="@id/topBarContainer"
             app:layout_constraintBottom_toTopOf="@+id/banner_container">
 
-            <!-- زر تحميل أورج 2027 الملكي -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_download_2027"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:text="@string/download_2027"
-                android:textColor="@color/royal_accent"
-                android:textSize="18sp"
-                app:backgroundTint="#33FFFFFF"
-                app:strokeColor="@color/royal_accent"
-                app:strokeWidth="1.5dp"
-                app:cornerRadius="20dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="30dp"
+                android:gravity="center_horizontal">
 
-            <!-- زر تحميل زيكو VIP -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_download_vip"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:text="@string/download_vip"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:backgroundTint="#33FFFFFF"
-                app:strokeColor="@color/white"
-                app:strokeWidth="1.5dp"
-                app:cornerRadius="20dp"
-                android:layout_marginBottom="20dp"/>
+                <!-- زر تحميل أورج 2027 الملكي -->
+                <eightbitlab.com.blurview.BlurView
+                    android:id="@+id/blurBtnDownload2027"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/bg_glass_border"
+                    android:clipToOutline="true"
+                    app:blurOverlayColor="#1AFFFFFF">
 
-            <!-- زر معاينة الأورج -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_preview"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:text="@string/preview_org"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:backgroundTint="@color/royal_accent"
-                app:cornerRadius="20dp"/>
+                    <LinearLayout
+                        android:id="@+id/btn_download_2027_click"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground">
+                        <TextView
+                            android:id="@+id/tv_btn_download_2027"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/download_2027"
+                            android:textColor="#FFD700"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:shadowColor="#FF000000"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="4" />
+                    </LinearLayout>
+                </eightbitlab.com.blurview.BlurView>
 
-        </LinearLayout>
+                <!-- زر تحميل زيكو VIP -->
+                <eightbitlab.com.blurview.BlurView
+                    android:id="@+id/blurBtnDownloadVip"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/bg_glass_border"
+                    android:clipToOutline="true"
+                    app:blurOverlayColor="#1A00FFFF"> <!-- إضاءة نيون زرقاء خفيفة -->
+
+                    <LinearLayout
+                        android:id="@+id/btn_download_vip_click"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground">
+                        <TextView
+                            android:id="@+id/tv_btn_download_vip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/download_vip"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:shadowColor="#FF000000"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="4" />
+                    </LinearLayout>
+                </eightbitlab.com.blurview.BlurView>
+
+                <!-- زر معاينة الأورج -->
+                <eightbitlab.com.blurview.BlurView
+                    android:id="@+id/blurBtnPreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/bg_glass_border"
+                    android:clipToOutline="true"
+                    app:blurOverlayColor="#1AFFD700"> <!-- إضاءة ذهبية -->
+
+                    <LinearLayout
+                        android:id="@+id/btn_preview_click"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground">
+                        <TextView
+                            android:id="@+id/tv_btn_preview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/preview_org"
+                            android:textColor="#000000"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </eightbitlab.com.blurview.BlurView>
+
+            </LinearLayout>
+        </ScrollView>
 
         <!-- حاوية البانر الإعلاني المتكيفة -->
         <FrameLayout
@@ -134,12 +265,11 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#F20A0E29"
-        app:itemTextColor="@color/white"
-        app:itemIconTint="@color/royal_accent"
+        android:background="#CC0A0A0A" 
+        app:itemTextColor="#FFFFFF"
+        app:itemIconTint="#FFD700"
         app:menu="@menu/drawer_menu">
         
-        <!-- حقوق النشر في أسفل القائمة -->
         <TextView
             android:id="@+id/tv_copyright"
             android:layout_width="match_parent"
@@ -147,11 +277,10 @@
             android:layout_gravity="bottom"
             android:padding="16dp"
             android:text="@string/copyright"
-            android:textColor="@color/royal_accent"
+            android:textColor="#FFD700"
             android:textAlignment="center"
             android:textSize="12sp"
             android:textStyle="bold" />
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
-
