@@ -63,8 +63,6 @@
                     android:background="@drawable/bg_glass_circle_border"
                     android:clipToOutline="true"
                     app:blurOverlayColor="#0DFFFFFF">
-                    
-                    <!-- تم التعديل للأيقونة الاحترافية -->
                     <ImageView
                         android:layout_width="26dp"
                         android:layout_height="26dp"
@@ -113,8 +111,6 @@
                     android:background="@drawable/bg_glass_circle_border"
                     android:clipToOutline="true"
                     app:blurOverlayColor="#0DFFFFFF">
-                    
-                    <!-- تم التعديل للأيقونة الاحترافية -->
                     <ImageView
                         android:layout_width="26dp"
                         android:layout_height="26dp"
@@ -252,47 +248,52 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- ================= القائمة الجانبية الزجاجية الجديدة ================= -->
+    <!-- ================= القائمة الجانبية الزجاجية العائمة ================= -->
     <eightbitlab.com.blurview.BlurView
         android:id="@+id/blurDrawerContainer"
         android:layout_width="280dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="#1A000000"
-        app:blurOverlayColor="#80000000">
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_glass_border"
+        android:clipToOutline="true"
+        app:blurOverlayColor="#E60A0A0A">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="60dp">
+            android:paddingVertical="30dp"
+            android:paddingHorizontal="16dp">
 
             <!-- عنوان القائمة -->
             <TextView
+                android:id="@+id/tv_menu_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="القائمة الإمبراطورية"
+                android:text="@string/more_menu"
                 android:textColor="#FFD700"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="30dp"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="3"/>
 
-            <!-- زر سياسة الخصوصية مع أيقونة -->
+            <!-- زر سياسة الخصوصية -->
             <LinearLayout
                 android:id="@+id/nav_privacy_click"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="55dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackground"
-                android:paddingStart="24dp"
+                android:paddingStart="16dp"
                 android:layout_marginBottom="8dp">
                 
                 <ImageView
@@ -308,21 +309,22 @@
                     android:layout_height="wrap_content"
                     android:text="@string/privacy_policy"
                     android:textColor="#FFFFFF"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- زر التواصل تيليجرام مع أيقونة -->
+            <!-- زر التواصل تيليجرام -->
             <LinearLayout
                 android:id="@+id/nav_telegram_click"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="55dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackground"
-                android:paddingStart="24dp">
+                android:paddingStart="16dp"
+                android:layout_marginBottom="24dp">
                 
                 <ImageView
                     android:layout_width="24dp"
@@ -337,20 +339,15 @@
                     android:layout_height="wrap_content"
                     android:text="@string/contact_telegram"
                     android:textColor="#FFFFFF"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/> <!-- دفع الحقوق للأسفل -->
-
+            <!-- الحقوق -->
             <TextView
                 android:id="@+id/tv_copyright"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
                 android:text="@string/copyright"
                 android:textColor="#FFD700"
                 android:textAlignment="center"
