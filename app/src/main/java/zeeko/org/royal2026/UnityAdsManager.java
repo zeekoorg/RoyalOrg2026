@@ -26,7 +26,7 @@ public class UnityAdsManager {
     private final String GAME_ID = "6186592"; 
     private final String REWARDED_PLACEMENT = "Rewarded_Android";
     private final String BANNER_PLACEMENT = "Banner_Android";
-    private final boolean TEST_MODE = true; // اجعلها false عند النشر النهائي
+    private final boolean TEST_MODE = false; // اجعلها false عند النشر النهائي
 
     private boolean isInitialized = false;
     private boolean isAdLoaded = false;
