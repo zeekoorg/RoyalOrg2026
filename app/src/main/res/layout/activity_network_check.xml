@@ -2,75 +2,93 @@
 <androidx.constraintlayout.widget.ConstraintLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/network_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/royal26">
+    android:background="#000000">
 
-    <!-- طبقة التظليل الملكي -->
+    <!-- الخلفية -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/royal26" />
+
+    <!-- طبقة التظليل -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#A6000022" /> <!-- كحلي داكن شفاف -->
+        android:background="#99000000" />
 
-    <!-- أيقونة / أنيميشن التحميل (يمكنك استخدام Lottie لاحقاً، حالياً سنستخدم شريط تحميل أنيق) -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:indeterminateTint="@color/royal_accent"
-        app:layout_constraintBottom_toTopOf="@+id/tv_status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:layout_marginBottom="24dp" />
-
-    <!-- أيقونة لا يوجد اتصال (مخفية افتراضياً) -->
-    <ImageView
-        android:id="@+id/img_no_internet"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@android:drawable/ic_dialog_alert"
-        app:tint="@color/white"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/tv_status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:layout_marginBottom="24dp"/>
-
-    <!-- رسالة الحالة -->
-    <TextView
-        android:id="@+id/tv_status"
-        android:layout_width="wrap_content"
+    <!-- الكرت الزجاجي في المنتصف -->
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/blurNetworkCard"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:text="جاري التحقق من الاتصال الإمبراطوري..."
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/btn_retry"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        android:layout_marginBottom="40dp"/>
-
-    <!-- زر إعادة المحاولة (مخفي افتراضياً) -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_retry"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:text="إعادة المحاولة"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        app:backgroundTint="@color/royal_accent"
-        app:cornerRadius="15dp"
-        android:visibility="gone"
+        android:background="@drawable/bg_glass_border"
+        android:clipToOutline="true"
+        app:blurOverlayColor="#1AFFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_status" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="30dp">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:indeterminateTint="#FFD700"
+                android:layout_marginBottom="20dp"/>
+
+            <ImageView
+                android:id="@+id/img_no_internet"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@android:drawable/ic_dialog_alert"
+                app:tint="#FF4444"
+                android:visibility="gone"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/checking_internet"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:shadowColor="#000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="3"
+                android:layout_marginBottom="20dp"/>
+
+            <LinearLayout
+                android:id="@+id/btn_retry_click"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/bg_glass_border"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/retry"
+                    android:textColor="#FFD700"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </eightbitlab.com.blurview.BlurView>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
