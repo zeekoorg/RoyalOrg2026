@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +23,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Locale;
+
+import eightbitlab.com.blurview.BlurView;
+import eightbitlab.com.blurview.RenderScriptBlur;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private String currentLang;
     
-    // تعريف عناصر الواجهة لتحديث نصوصها لاحقاً
+    // تعريف عناصر النصوص لتحديثها لاحقاً
     private TextView tvHeaderTitle, tvCopyright;
-    private MaterialButton btnDownload2027, btnDownloadVip, btnPreview;
+    private TextView tvBtnDownload2027, tvBtnDownloadVip, tvBtnPreview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,18 +61,41 @@ public class MainActivity extends AppCompatActivity {
             return WindowInsetsCompat.CONSUMED;
         });
 
-        // ربط العناصر
+        // ربط العناصر الأساسية
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         tvHeaderTitle = findViewById(R.id.tv_header_title);
         tvCopyright = findViewById(R.id.tv_copyright);
-        btnDownload2027 = findViewById(R.id.btn_download_2027);
-        btnDownloadVip = findViewById(R.id.btn_download_vip);
-        btnPreview = findViewById(R.id.btn_preview);
-        ImageButton btnMenu = findViewById(R.id.btn_menu);
-        ImageButton btnLanguage = findViewById(R.id.btn_language);
+        
+        // ربط نصوص الأزرار الزجاجية
+        tvBtnDownload2027 = findViewById(R.id.tv_btn_download_2027);
+        tvBtnDownloadVip = findViewById(R.id.tv_btn_download_vip);
+        tvBtnPreview = findViewById(R.id.tv_btn_preview);
+
+        // ربط حاويات النقر للأزرار
+        LinearLayout btnMenu = findViewById(R.id.btn_menu_click);
+        LinearLayout btnLanguage = findViewById(R.id.btn_language_click);
+        LinearLayout btnDownload2027 = findViewById(R.id.btn_download_2027_click);
+        LinearLayout btnDownloadVip = findViewById(R.id.btn_download_vip_click);
+        LinearLayout btnPreview = findViewById(R.id.btn_preview_click);
         FrameLayout bannerContainer = findViewById(R.id.banner_container);
 
+        // =========================================
+        // 2. تهيئة تأثير الزجاج (BlurView)
+        // =========================================
+        View decorView = getWindow().getDecorView();
+        ViewGroup rootView = (ViewGroup) decorView.findViewById(android.R.id.content);
+        Drawable windowBackground = decorView.getBackground();
+
+        setupBlurView(findViewById(R.id.blurMenuBtn), rootView, windowBackground);
+        setupBlurView(findViewById(R.id.blurLangBtn), rootView, windowBackground);
+        setupBlurView(findViewById(R.id.blurBtnDownload2027), rootView, windowBackground);
+        setupBlurView(findViewById(R.id.blurBtnDownloadVip), rootView, windowBackground);
+        setupBlurView(findViewById(R.id.blurBtnPreview), rootView, windowBackground);
+
+        // =========================================
+        // 3. ربط الإعلانات والنقرات
+        // =========================================
         // 🚀 تحميل البانر الإعلاني في الحاوية السفلية
         UnityAdsManager.getInstance().loadBanner(this, bannerContainer);
 
@@ -95,8 +123,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // دالة مساعدة لتهيئة الزجاج (BlurView) بشكل احترافي
+    private void setupBlurView(BlurView blurView, ViewGroup rootView, Drawable windowBackground) {
+        if (blurView != null) {
+            blurView.setupWith(rootView, new RenderScriptBlur(this))
+                    .setFrameClearDrawable(windowBackground)
+                    .setBlurRadius(15f); // يمكنك تعديل درجة الضبابية (الحد الأقصى 25)
+        }
+    }
+
     // =========================================
-    // 2. منطق الإعلانات والتحميل
+    // 4. منطق الإعلانات والتحميل
     // =========================================
     private void showAdRequirementDialog(String downloadUrl) {
         new MaterialAlertDialogBuilder(this, R.style.Theme_RoyalOrg2026_NoActionBar)
@@ -105,11 +142,9 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.yes_watch, (dialog, which) -> {
                     
                     // 🚀 توجيه الطلب لمدير الإعلانات الذي سيتولى كل شيء:
-                    // (عرض الإعلان فوراً، أو إظهار دايلوج التحميل لمدة 15 ثانية، ثم فتح الرابط)
                     UnityAdsManager.getInstance().handleAdRequest(MainActivity.this, downloadUrl, new UnityAdsManager.AdActionCallback() {
                         @Override
                         public void onProceed(String url) {
-                            // يتم استدعاء هذا فقط بعد إغلاق الإعلان بنجاح، أو انقضاء الـ 15 ثانية
                             openWebLink(url);
                         }
                     });
@@ -120,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // =========================================
-    // 3. تغيير اللغة ديناميكياً بدون إعادة رسم الشاشة
+    // 5. تغيير اللغة ديناميكياً بدون إعادة رسم الشاشة
     // =========================================
     private void toggleLanguage() {
         currentLang = currentLang.equals("ar") ? "en" : "ar";
@@ -144,9 +179,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUIStrings() {
         tvHeaderTitle.setText(R.string.app_name);
-        btnDownload2027.setText(R.string.download_2027);
-        btnDownloadVip.setText(R.string.download_vip);
-        btnPreview.setText(R.string.preview_org);
+        tvBtnDownload2027.setText(R.string.download_2027);
+        tvBtnDownloadVip.setText(R.string.download_vip);
+        tvBtnPreview.setText(R.string.preview_org);
         tvCopyright.setText(R.string.copyright);
 
         Menu menu = navigationView.getMenu();
