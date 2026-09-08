@@ -9,6 +9,8 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -98,20 +100,54 @@ public class MainActivity extends AppCompatActivity {
         btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
         btnLanguage.setOnClickListener(v -> toggleLanguage());
 
-        btnDownload2027.setOnClickListener(v -> showGlassAdDialog("https://www.mediafire.com/file/mkz1venvrxb77xa/اورج+2026+الملكي+مهكر.apk/file"));
-        btnDownloadVip.setOnClickListener(v -> showGlassAdDialog("https://www.mediafire.com/file/m5t8na96dpymjpg/ORG+ZEEKO+VIP+27.apk/file"));
-        btnDownloadSets.setOnClickListener(v -> showGlassAdDialog("https://www.mediafire.com/file/vu61vw7w0pvudc0/سيتات+اورج+2027.apk/file"));
-        btnPreview.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, OrgPreviewActivity.class)));
+        btnDownload2027.setOnClickListener(v -> requireInternet(() -> showGlassAdDialog("https://www.mediafire.com/file/mkz1venvrxb77xa/اورج+2026+الملكي+مهكر.apk/file")));
+        btnDownloadVip.setOnClickListener(v -> requireInternet(() -> showGlassAdDialog("https://www.mediafire.com/file/m5t8na96dpymjpg/ORG+ZEEKO+VIP+27.apk/file")));
+        btnDownloadSets.setOnClickListener(v -> requireInternet(() -> showGlassAdDialog("https://www.mediafire.com/file/vu61vw7w0pvudc0/سيتات+اورج+2027.apk/file")));
+        btnPreview.setOnClickListener(v -> requireInternet(() -> startActivity(new Intent(MainActivity.this, OrgPreviewActivity.class))));
 
         // نقرات القائمة الجانبية
-        navPrivacyClick.setOnClickListener(v -> {
+        navPrivacyClick.setOnClickListener(v -> requireInternet(() -> {
             openWebLink("https://www.zeekoorg.com/p/privacy-policy-almalaki.html");
             drawerLayout.closeDrawer(GravityCompat.START);
-        });
-        navTelegramClick.setOnClickListener(v -> {
+        }));
+        navTelegramClick.setOnClickListener(v -> requireInternet(() -> {
             openWebLink("https://t.me/zeeko2025");
             drawerLayout.closeDrawer(GravityCompat.START);
-        });
+        }));
+    }
+
+    // =========================================
+    // دوال فحص الإنترنت الصارمة
+    // =========================================
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isNetworkAvailable()) {
+            startActivity(new Intent(MainActivity.this, NetworkCheckActivity.class));
+            finish();
+        }
+    }
+
+    private void requireInternet(Runnable action) {
+        if (isNetworkAvailable()) {
+            action.run();
+        } else {
+            startActivity(new Intent(MainActivity.this, NetworkCheckActivity.class));
+            finish();
+        }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
+            if (capabilities != null) {
+                return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                       capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                       capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET);
+            }
+        }
+        return false;
     }
 
     private void setupBlurView(BlurView blurView, ViewGroup rootView, Drawable windowBackground) {
