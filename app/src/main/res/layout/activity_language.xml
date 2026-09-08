@@ -4,9 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/royal26">
+    android:background="#000000">
 
-    <!-- طبقة شفافة داكنة فوق الخلفية لتوضيح النصوص -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/royal26" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,50 +23,86 @@
         android:layout_height="wrap_content"
         android:text="Select Language\nاختر اللغة"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btn_arabic"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="5"
+        app:layout_constraintBottom_toTopOf="@+id/blurArabic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         android:layout_marginBottom="40dp"/>
 
-    <!-- زر اللغة العربية -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_arabic"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:text="العربية"
-        android:textSize="20sp"
-        android:textColor="@color/royal_accent"
-        app:backgroundTint="#33000000"
-        app:strokeColor="@color/royal_accent"
-        app:strokeWidth="2dp"
-        app:cornerRadius="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_english"
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/blurArabic"
+        android:layout_width="260dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/bg_glass_border"
+        android:clipToOutline="true"
+        app:blurOverlayColor="#1AFFD700" 
+        app:layout_constraintBottom_toTopOf="@+id/blurEnglish"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title"
-        android:layout_marginBottom="20dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_title">
+        
+        <LinearLayout
+            android:id="@+id/btn_arabic_click"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="العربية"
+                android:textColor="#FFD700"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:shadowColor="#000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="3"/>
+        </LinearLayout>
+    </eightbitlab.com.blurview.BlurView>
 
-    <!-- زر اللغة الإنجليزية -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_english"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:text="English"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        app:backgroundTint="#33000000"
-        app:strokeColor="@color/white"
-        app:strokeWidth="2dp"
-        app:cornerRadius="15dp"
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/blurEnglish"
+        android:layout_width="260dp"
+        android:layout_height="75dp"
+        android:background="@drawable/bg_glass_border"
+        android:clipToOutline="true"
+        app:blurOverlayColor="#1AFFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_arabic" />
-
+        app:layout_constraintTop_toBottomOf="@+id/blurArabic">
+        
+        <LinearLayout
+            android:id="@+id/btn_english_click"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="English"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:shadowColor="#000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="3"/>
+        </LinearLayout>
+    </eightbitlab.com.blurview.BlurView>
 </androidx.constraintlayout.widget.ConstraintLayout>
-
