@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "525165140266",
+    "firebase_url": "https://org2026-3e500-default-rtdb.firebaseio.com",
+    "project_id": "org2026-3e500",
+    "storage_bucket": "org2026-3e500.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525165140266:android:a277700362e4a7c5c06653",
+        "android_client_info": {
+          "package_name": "zeeko.org.royal2026"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDX1XanAE_q-hwH9P_HPPnnAEftNFGSDI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
