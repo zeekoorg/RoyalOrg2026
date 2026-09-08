@@ -178,7 +178,14 @@ public class UnityAdsManager {
             @Override
             public void onBannerLoaded(BannerView bannerView) {
                 bannerContainer.removeAllViews();
-                bannerContainer.addView(bannerView);
+                
+                // إضافة إعدادات المحاذاة للمنتصف (Gravity.CENTER)
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.WRAP_CONTENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT,
+                        android.view.Gravity.CENTER
+                );
+                bannerContainer.addView(bannerView, params);
             }
             @Override
             public void onBannerClick(BannerView bannerView) {}
