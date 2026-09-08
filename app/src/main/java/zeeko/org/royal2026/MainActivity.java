@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private String currentLang;
     
     private TextView tvHeaderTitle, tvCopyright, tvMenuTitle;
-    private TextView tvBtnDownload2027, tvBtnDownloadVip, tvBtnPreview;
+    private TextView tvBtnDownload2027, tvBtnDownloadVip, tvBtnDownloadSets, tvBtnPreview;
     private TextView tvNavPrivacy, tvNavTelegram;
 
     @Override
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         
         tvBtnDownload2027 = findViewById(R.id.tv_btn_download_2027);
         tvBtnDownloadVip = findViewById(R.id.tv_btn_download_vip);
+        tvBtnDownloadSets = findViewById(R.id.tv_btn_download_sets);
         tvBtnPreview = findViewById(R.id.tv_btn_preview);
         
         tvNavPrivacy = findViewById(R.id.tv_nav_privacy);
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout btnLanguage = findViewById(R.id.btn_language_click);
         LinearLayout btnDownload2027 = findViewById(R.id.btn_download_2027_click);
         LinearLayout btnDownloadVip = findViewById(R.id.btn_download_vip_click);
+        LinearLayout btnDownloadSets = findViewById(R.id.btn_download_sets_click);
         LinearLayout btnPreview = findViewById(R.id.btn_preview_click);
         
         LinearLayout navPrivacyClick = findViewById(R.id.nav_privacy_click);
@@ -86,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         setupBlurView(findViewById(R.id.blurLangBtn), rootView, windowBackground);
         setupBlurView(findViewById(R.id.blurBtnDownload2027), rootView, windowBackground);
         setupBlurView(findViewById(R.id.blurBtnDownloadVip), rootView, windowBackground);
+        setupBlurView(findViewById(R.id.blurBtnDownloadSets), rootView, windowBackground);
         setupBlurView(findViewById(R.id.blurBtnPreview), rootView, windowBackground);
         setupBlurView(findViewById(R.id.blurDrawerContainer), rootView, windowBackground);
 
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnDownload2027.setOnClickListener(v -> showGlassAdDialog("https://www.mediafire.com/file/mkz1venvrxb77xa/اورج+2026+الملكي+مهكر.apk/file"));
         btnDownloadVip.setOnClickListener(v -> showGlassAdDialog("https://www.mediafire.com/file/m5t8na96dpymjpg/ORG+ZEEKO+VIP+27.apk/file"));
+        btnDownloadSets.setOnClickListener(v -> showGlassAdDialog("https://www.mediafire.com/file/vu61vw7w0pvudc0/سيتات+اورج+2027.apk/file"));
         btnPreview.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, OrgPreviewActivity.class)));
 
         // نقرات القائمة الجانبية
@@ -186,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
         tvHeaderTitle.setText(R.string.app_name);
         tvBtnDownload2027.setText(R.string.download_2027);
         tvBtnDownloadVip.setText(R.string.download_vip);
+        tvBtnDownloadSets.setText(R.string.download_sets_2027);
         tvBtnPreview.setText(R.string.preview_org);
         tvCopyright.setText(R.string.copyright);
         tvMenuTitle.setText(R.string.more_menu);
