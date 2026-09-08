@@ -206,6 +206,41 @@
                     </LinearLayout>
                 </eightbitlab.com.blurview.BlurView>
 
+                <!-- الزر الجديد: تحميل سيتات اورج 2027 -->
+                <eightbitlab.com.blurview.BlurView
+                    android:id="@+id/blurBtnDownloadSets"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/bg_glass_border"
+                    android:clipToOutline="true"
+                    app:blurOverlayColor="#1AFF00FF"> <!-- نيون مختلف لتمييزه -->
+
+                    <LinearLayout
+                        android:id="@+id/btn_download_sets_click"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground">
+                        <TextView
+                            android:id="@+id/tv_btn_download_sets"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/download_sets_2027"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:shadowColor="#FF000000"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="4" />
+                    </LinearLayout>
+                </eightbitlab.com.blurview.BlurView>
+
                 <eightbitlab.com.blurview.BlurView
                     android:id="@+id/blurBtnPreview"
                     android:layout_width="match_parent"
