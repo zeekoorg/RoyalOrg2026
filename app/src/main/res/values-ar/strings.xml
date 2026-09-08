@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">أورج 2026 الملكي</string>
     <string name="download_2027">تحميل اورج الملكي 2027</string>
@@ -11,5 +12,11 @@
     <string name="yes_watch">نعم، مشاهدة</string>
     <string name="cancel">إلغاء</string>
     <string name="loading_ad">جاري تحميل الإعلان...</string>
-    <integer name="locale_mirror_flip">180</integer>
+    
+    <!-- نصوص شاشة التحقق من الإنترنت -->
+    <string name="checking_internet">جاري التحقق من الاتصال الآمن...</string>
+    <string name="no_internet">لا يوجد اتصال فعلي بالإنترنت.\nالرجاء التأكد من الشبكة والمحاولة مجدداً.</string>
+    <string name="connected_success">تم الاتصال بنجاح. جاري الدخول...</string>
+    <string name="retry">إعادة المحاولة</string>
 </resources>
+
