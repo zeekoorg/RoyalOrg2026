@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
         btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
         btnLanguage.setOnClickListener(v -> toggleLanguage());
 
-        btnDownload2027.setOnClickListener(v -> showGlassAdDialog("https://example.com/download_2027"));
-        btnDownloadVip.setOnClickListener(v -> showGlassAdDialog("https://example.com/download_vip"));
+        btnDownload2027.setOnClickListener(v -> showGlassAdDialog("https://www.mediafire.com/file/mkz1venvrxb77xa/اورج+2026+الملكي+مهكر.apk/file"));
+        btnDownloadVip.setOnClickListener(v -> showGlassAdDialog("https://www.mediafire.com/file/m5t8na96dpymjpg/ORG+ZEEKO+VIP+27.apk/file"));
         btnPreview.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, OrgPreviewActivity.class)));
 
         // نقرات القائمة الجانبية
