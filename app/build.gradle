@@ -11,8 +11,8 @@ android {
         applicationId "zeeko.org.royal2026"
         minSdk 24
         targetSdk 35
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.0.4"
     }
 
     compileOptions {
@@ -35,6 +35,8 @@ dependencies {
     // ==========================================
     implementation platform('com.google.firebase:firebase-bom:34.14.0') 
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.github.Dimezis:BlurView:version-2.0.6'
+
 
     // ==========================================
     // 3. إعلانات Unity Ads
