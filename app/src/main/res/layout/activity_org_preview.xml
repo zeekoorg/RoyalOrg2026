@@ -5,52 +5,75 @@
     android:id="@+id/preview_main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/royal26"
+    android:background="#000000"
+    android:layoutDirection="locale"
     android:fitsSystemWindows="true">
 
-    <!-- طبقة تظليل ملكية داكنة -->
-    <View
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#A600081A" />
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/royal26" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000" />
+    </FrameLayout>
 
-    <!-- الشريط العلوي الزجاجي -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/top_bar"
+    <LinearLayout
+        android:id="@+id/topBarPreview"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#4DFFFFFF"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="6dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="4dp"
+        android:paddingVertical="5dp"
+        android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- زر الرجوع -->
-        <ImageButton
-            android:id="@+id/btn_back"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:src="@android:drawable/ic_menu_revert"
-            app:tint="@color/royal_accent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:rotationY="@integer/locale_mirror_flip"/> <!-- ليعكس السهم في العربية -->
+        <LinearLayout
+            android:id="@+id/btn_back_click"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+            <eightbitlab.com.blurview.BlurView
+                android:id="@+id/blurBackBtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_glass_circle_border"
+                android:clipToOutline="true"
+                app:blurOverlayColor="#0DFFFFFF">
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
+                    android:src="@android:drawable/ic_menu_revert"
+                    app:tint="#FFD700"
+                    android:rotationY="@integer/locale_mirror_flip"/>
+            </eightbitlab.com.blurview.BlurView>
+        </LinearLayout>
 
-        <!-- عنوان الشاشة -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="@string/preview_org"
-            android:textColor="@color/white"
+            android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/btn_back"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="12dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:shadowColor="#000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="3" />
+    </LinearLayout>
 
-    <!-- قائمة تمرير الصور -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -58,7 +81,7 @@
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
         android:scrollbars="none"
-        app:layout_constraintTop_toBottomOf="@+id/top_bar"
+        app:layout_constraintTop_toBottomOf="@+id/topBarPreview"
         app:layout_constraintBottom_toTopOf="@+id/banner_container_preview">
 
         <LinearLayout
@@ -67,100 +90,90 @@
             android:orientation="vertical"
             android:paddingHorizontal="16dp">
 
-            <!-- الصورة 1 -->
-            <com.google.android.material.card.MaterialCardView
+            <!-- 5 صور زجاجية متطابقة الهيكل -->
+            <eightbitlab.com.blurview.BlurView
+                android:id="@+id/blurImage1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="8dp"
-                app:strokeColor="@color/royal_accent"
-                app:strokeWidth="1.5dp"
-                app:cardBackgroundColor="#33FFFFFF">
+                android:background="@drawable/bg_glass_border"
+                android:clipToOutline="true"
+                app:blurOverlayColor="#1AFFFFFF">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     android:src="@drawable/image1" />
-            </com.google.android.material.card.MaterialCardView>
+            </eightbitlab.com.blurview.BlurView>
 
-            <!-- الصورة 2 -->
-            <com.google.android.material.card.MaterialCardView
+            <eightbitlab.com.blurview.BlurView
+                android:id="@+id/blurImage2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="8dp"
-                app:strokeColor="@color/royal_accent"
-                app:strokeWidth="1.5dp"
-                app:cardBackgroundColor="#33FFFFFF">
+                android:background="@drawable/bg_glass_border"
+                android:clipToOutline="true"
+                app:blurOverlayColor="#1AFFFFFF">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     android:src="@drawable/image2" />
-            </com.google.android.material.card.MaterialCardView>
+            </eightbitlab.com.blurview.BlurView>
 
-            <!-- الصورة 3 -->
-            <com.google.android.material.card.MaterialCardView
+            <eightbitlab.com.blurview.BlurView
+                android:id="@+id/blurImage3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="8dp"
-                app:strokeColor="@color/royal_accent"
-                app:strokeWidth="1.5dp"
-                app:cardBackgroundColor="#33FFFFFF">
+                android:background="@drawable/bg_glass_border"
+                android:clipToOutline="true"
+                app:blurOverlayColor="#1AFFFFFF">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     android:src="@drawable/image3" />
-            </com.google.android.material.card.MaterialCardView>
+            </eightbitlab.com.blurview.BlurView>
 
-            <!-- الصورة 4 -->
-            <com.google.android.material.card.MaterialCardView
+            <eightbitlab.com.blurview.BlurView
+                android:id="@+id/blurImage4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="8dp"
-                app:strokeColor="@color/royal_accent"
-                app:strokeWidth="1.5dp"
-                app:cardBackgroundColor="#33FFFFFF">
+                android:background="@drawable/bg_glass_border"
+                android:clipToOutline="true"
+                app:blurOverlayColor="#1AFFFFFF">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     android:src="@drawable/image4" />
-            </com.google.android.material.card.MaterialCardView>
+            </eightbitlab.com.blurview.BlurView>
 
-            <!-- الصورة 5 -->
-            <com.google.android.material.card.MaterialCardView
+            <eightbitlab.com.blurview.BlurView
+                android:id="@+id/blurImage5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="8dp"
-                app:strokeColor="@color/royal_accent"
-                app:strokeWidth="1.5dp"
-                app:cardBackgroundColor="#33FFFFFF">
+                android:background="@drawable/bg_glass_border"
+                android:clipToOutline="true"
+                app:blurOverlayColor="#1AFFFFFF">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
                     android:src="@drawable/image5" />
-            </com.google.android.material.card.MaterialCardView>
-
+            </eightbitlab.com.blurview.BlurView>
+            
         </LinearLayout>
     </ScrollView>
 
-    <!-- حاوية البانر الإعلاني -->
     <FrameLayout
         android:id="@+id/banner_container_preview"
         android:layout_width="match_parent"
