@@ -63,11 +63,13 @@
                     android:background="@drawable/bg_glass_circle_border"
                     android:clipToOutline="true"
                     app:blurOverlayColor="#0DFFFFFF">
+                    
+                    <!-- تم التعديل للأيقونة الاحترافية -->
                     <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
                         android:layout_gravity="center"
-                        android:src="@android:drawable/ic_menu_sort_by_size"
+                        android:src="@drawable/ic_menu_royal"
                         app:tint="#FFD700" />
                 </eightbitlab.com.blurview.BlurView>
             </LinearLayout>
@@ -111,11 +113,13 @@
                     android:background="@drawable/bg_glass_circle_border"
                     android:clipToOutline="true"
                     app:blurOverlayColor="#0DFFFFFF">
+                    
+                    <!-- تم التعديل للأيقونة الاحترافية -->
                     <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
                         android:layout_gravity="center"
-                        android:src="@android:drawable/ic_menu_manage"
+                        android:src="@drawable/ic_language_royal"
                         app:tint="#FFD700" />
                 </eightbitlab.com.blurview.BlurView>
             </LinearLayout>
@@ -249,7 +253,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- ================= القائمة الجانبية الزجاجية الجديدة ================= -->
-    <!-- بدلاً من NavigationView، نستخدم حاوية مخصصة بعرض 280dp -->
     <eightbitlab.com.blurview.BlurView
         android:id="@+id/blurDrawerContainer"
         android:layout_width="280dp"
@@ -262,8 +265,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingTop="50dp"
-            android:paddingHorizontal="16dp">
+            android:paddingTop="60dp">
 
             <!-- عنوان القائمة -->
             <TextView
@@ -274,50 +276,68 @@
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="50dp"
                 android:shadowColor="#000000"
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="3"/>
 
-            <!-- زر سياسة الخصوصية -->
+            <!-- زر سياسة الخصوصية مع أيقونة -->
             <LinearLayout
                 android:id="@+id/nav_privacy_click"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="65dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?attr/selectableItemBackground"
-                android:layout_marginBottom="16dp">
+                android:paddingStart="24dp"
+                android:layout_marginBottom="8dp">
+                
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_privacy_royal"
+                    app:tint="#FFFFFF"
+                    android:layout_marginEnd="16dp" />
+                    
                 <TextView
                     android:id="@+id/tv_nav_privacy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/privacy_policy"
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- زر التواصل تيليجرام -->
+            <!-- زر التواصل تيليجرام مع أيقونة -->
             <LinearLayout
                 android:id="@+id/nav_telegram_click"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="65dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="?attr/selectableItemBackground">
+                android:background="?attr/selectableItemBackground"
+                android:paddingStart="24dp">
+                
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_telegram_royal"
+                    app:tint="#00E5FF"
+                    android:layout_marginEnd="16dp" />
+                    
                 <TextView
                     android:id="@+id/tv_nav_telegram"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/contact_telegram"
                     android:textColor="#FFFFFF"
-                    android:textSize="18sp"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -330,7 +350,7 @@
                 android:id="@+id/tv_copyright"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="30dp"
                 android:text="@string/copyright"
                 android:textColor="#FFD700"
                 android:textAlignment="center"
