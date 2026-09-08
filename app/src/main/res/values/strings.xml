@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Royal Org 2026</string>
-    <string name="download_2027">Download Royal Org 2027</string>
+    <string name="download_2027">Download Royal Org 2026</string>
     <string name="download_vip">Download ORG ZEEKO VIP 27</string>
     <string name="preview_org">Preview Org</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="contact_telegram">Contact via Telegram</string>
     <string name="copyright">All rights reserved © ZEEKO ORG</string>
+    <string name="more_menu">More</string>
+    
     <string name="ad_dialog_title">Download Requirement</string>
     <string name="ad_dialog_message">To proceed with the download, you need to watch a short sponsored video. Do you want to watch it now?</string>
     <string name="yes_watch">Yes, Watch</string>
     <string name="cancel">Cancel</string>
     <string name="loading_ad">Loading Ad...</string>
     
-    <!-- نصوص شاشة التحقق من الإنترنت -->
     <string name="checking_internet">Verifying Secure Connection...</string>
     <string name="no_internet">No actual internet connection.\nPlease check your network and try again.</string>
     <string name="connected_success">Connection Successful. Entering...</string>
