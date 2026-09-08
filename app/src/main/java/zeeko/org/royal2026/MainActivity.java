@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private String currentLang;
     
-    private TextView tvHeaderTitle, tvCopyright;
+    private TextView tvHeaderTitle, tvCopyright, tvMenuTitle;
     private TextView tvBtnDownload2027, tvBtnDownloadVip, tvBtnPreview;
     private TextView tvNavPrivacy, tvNavTelegram;
 
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         tvHeaderTitle = findViewById(R.id.tv_header_title);
         tvCopyright = findViewById(R.id.tv_copyright);
+        tvMenuTitle = findViewById(R.id.tv_menu_title);
         
         tvBtnDownload2027 = findViewById(R.id.tv_btn_download_2027);
         tvBtnDownloadVip = findViewById(R.id.tv_btn_download_vip);
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         btnDownloadVip.setOnClickListener(v -> showGlassAdDialog("https://example.com/download_vip"));
         btnPreview.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, OrgPreviewActivity.class)));
 
-        // نقرات القائمة الجانبية الزجاجية
+        // نقرات القائمة الجانبية
         navPrivacyClick.setOnClickListener(v -> {
             openWebLink("https://www.zeekoorg.com/p/privacy-policy-almalaki.html");
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -117,16 +118,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // =========================================
-    // إنشاء الدايلوج الزجاجي الموحد للإعلانات
-    // =========================================
     private void showGlassAdDialog(String downloadUrl) {
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_custom_glass);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // خلفية شفافة للدايلوج
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        // تهيئة الزجاج الخاص بالدايلوج
         View decorView = getWindow().getDecorView();
         ViewGroup rootView = (ViewGroup) decorView.findViewById(android.R.id.content);
         setupBlurView(dialog.findViewById(R.id.blurDialogBg), rootView, new ColorDrawable(Color.TRANSPARENT));
@@ -138,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
         tvTitle.setText(R.string.ad_dialog_title);
         tvMessage.setText(R.string.ad_dialog_message);
 
-        // زر إلغاء
         TextView btnCancel = new TextView(this);
         btnCancel.setText(R.string.cancel);
         btnCancel.setTextColor(Color.WHITE);
@@ -148,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
         btnCancel.setGravity(android.view.Gravity.CENTER);
         btnCancel.setOnClickListener(v -> dialog.dismiss());
 
-        // زر مشاهدة (نيون ذهبي)
         TextView btnWatch = new TextView(this);
         btnWatch.setText(R.string.yes_watch);
         btnWatch.setTextColor(Color.parseColor("#FFD700"));
@@ -158,8 +153,6 @@ public class MainActivity extends AppCompatActivity {
         btnWatch.setGravity(android.view.Gravity.CENTER);
         btnWatch.setOnClickListener(v -> {
             dialog.dismiss();
-            
-            // 🚀 توجيه الطلب لمدير الإعلانات (والذي يجب أن نعدله ليعرض نافذة زجاجية أيضاً للتحميل)
             UnityAdsManager.getInstance().handleAdRequest(MainActivity.this, downloadUrl, url -> openWebLink(url));
         });
 
@@ -195,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
         tvBtnDownloadVip.setText(R.string.download_vip);
         tvBtnPreview.setText(R.string.preview_org);
         tvCopyright.setText(R.string.copyright);
-
+        tvMenuTitle.setText(R.string.more_menu);
         tvNavPrivacy.setText(R.string.privacy_policy);
         tvNavTelegram.setText(R.string.contact_telegram);
         
